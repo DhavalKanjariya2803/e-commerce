@@ -36,15 +36,15 @@
                 </button>
 
                 <div class="d-flex justify-content-center text-center mt-4 pt-1">
-                  <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg" /></a>
-                  <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2" /></a>
-                  <a href="#!" class="text-white"><i class="fab fa-google fa-lg" /></a>
+                  <a href="javascript:void(0)" class="text-white"><i class="fab fa-facebook-f fa-lg" /></a>
+                  <a href="javascript:void(0)" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2" /></a>
+                  <a href="javascript:void(0)" class="text-white"><i class="fab fa-google fa-lg" /></a>
                 </div>
               </div>
 
               <div>
                 <p class="mb-0">
-                  Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign Up</a>
+                  Don't have an account? <a href="javascript:void(0)" class="text-white-50 fw-bold">Sign Up</a>
                 </p>
               </div>
             </div>

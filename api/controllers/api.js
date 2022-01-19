@@ -31,7 +31,6 @@ module.exports = class API {
     // let postData = req.body;
     const productId = req.body.id
     try {
-      console.log(productId, 'id')
       const singleProduct = await product.findById(productId)
       return res.status(200).json(singleProduct)
     } catch (error) {

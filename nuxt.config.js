@@ -36,7 +36,8 @@ export default {
   */
   plugins: [
     '~/plugins/service-interceptor.js',
-    '~/plugins/axios-intercaptor.js'
+    '~/plugins/axios-intercaptor.js',
+    { src: '~/plugins/notyf', ssr: false }
   ],
 
   /*
@@ -118,6 +119,9 @@ export default {
       router.push({ path: '/login', component: resolve(__dirname, '@/pages/auth/login.vue') })
       router.push({ path: '/add-product', component: resolve(__dirname, '@/pages/addProduct.vue') })
       router.push({ path: '/checkout/:id', component: resolve(__dirname, '@/pages/checkout.vue') })
+      router.push({ path: '/cart', component: resolve(__dirname, '@/pages/cart.vue') })
+      router.push({ path: '/allOrders', component: resolve(__dirname, '@/components/AllOrderList.vue') })
+      router.push({ path: '/myorders', component: resolve(__dirname, '@/components/MyOrders.vue') })
     }
   },
   /*

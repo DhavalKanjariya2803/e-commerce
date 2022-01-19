@@ -72,19 +72,25 @@ export default {
     submitData () {
       // console.log(this.loginData)
       try {
-        const file = this.$refs.productImage.files[0]
-        const formData = new FormData()
-        if (typeof file !== 'undefined' && file !== null) { formData.append('image', file) }
-        formData.append('product_title', this.productData.title)
-        formData.append('product_description', this.productData.description)
-        formData.append('product_price', this.productData.price)
+        if (this.productData && this.productData.title && this.productData.description && this.productData.price) {
+          const file = this.$refs.productImage.files[0]
+          const formData = new FormData()
+          if (typeof file !== 'undefined' && file !== null) { formData.append('image', file) }
+          formData.append('product_title', this.productData.title)
+          formData.append('product_description', this.productData.description)
+          formData.append('product_price', this.productData.price)
 
-        this.$axios.$post('/api/product/add', formData).then((response) => {
-          console.log(response)
-          this.$router.push('/')
-        }).catch((error) => {
-          console.log(error)
-        })
+          this.$axios.$post('/api/product/add', formData).then((response) => {
+            this.notfySuccess('product added successfully')
+            this.$router.push('/')
+            this.$router.app.refresh()
+          }).catch((error) => {
+            console.log(error)
+            this.notfyError('product add failed')
+          })
+        } else {
+          this.notfyError('please fill details correctly')
+        }
         // await this.$auth.loginWith('local', {
         //   data: this.loginData
         // }).then((res) => {

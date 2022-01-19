@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 // const CryptoJS = require('crypto-js')
 const jwt = require('jsonwebtoken')
 const users = require('../models/user')
+const order = require('../models/order')
 const comFunc = require('./ComFunc')
 
 module.exports = class USER {
@@ -66,6 +67,9 @@ module.exports = class USER {
         resData.username = userData.username
         resData.email = userData.email
         resData.isAdmin = userData.isAdmin
+
+        const responceData = await order.find({ userId: userData._id, isOnCart: true })
+        resData.cartTotal = responceData.length
 
         return res.status(200).json({ data: resData })
       }

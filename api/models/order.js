@@ -5,7 +5,7 @@ const orderSchema = new mongoose.Schema({
   userId: { required: true, type: String },
   isPlaced: { required: true, type: Boolean },
   isOnCart: { required: true, type: Boolean },
-  email: { required: true, type: String },
+  email: { type: String },
   address: { type: String }
 
 })

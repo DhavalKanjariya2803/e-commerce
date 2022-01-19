@@ -10,22 +10,22 @@
             <div v-for="product in productData" :key="product._id" class="col-md-3 col-sm-6">
               <div class="product-grid">
                 <div class="product-image">
-                  <a href="#" class="image">
+                  <a href="javascript:void(0)" class="image">
                     <img class="pic-1" :src="`/${product.image}`" alt="">
                     <img class="pic-2" :src="`/${product.image}`" alt="">
                   </a>
                   <ul class="product-links">
                     <li>
-                      <nuxt-link href="#" :to="{ path: `/checkout/${product._id}`, params: { 'productId': product._id }}">
+                      <nuxt-link href="javascript:void(0)" :to="{ path: `/checkout/${product._id}`, params: { 'productId': product._id }}">
                         <i class="fa fa-shopping-bag" />
                       </nuxt-link>
                     </li>
-                    <li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+                    <li><a href="javascript:void(0)" @click="addToCart(product._id)"><i class="fas fa-shopping-cart" /></a></li>
                   </ul>
                 </div>
                 <div class="product-content">
                   <h3 class="title">
-                    <a href="#"> {{ product.title }} </a>
+                    <a href="javascript:void(0)"> {{ product.title }} </a>
                   </h3>
                   <span class="product-description"> {{ product.description.substring(0, 30)+"..." }}</span>
                   <div class="price">
@@ -48,6 +48,14 @@ export default {
       productData: null
     }
   },
+  computed: {
+    isAuthenticated () {
+      return this.$store.state.auth.loggedIn
+    },
+    loggedInUserData () {
+      return this.$store.state.auth.user
+    }
+  },
   mounted () {
     const vueApp = this
     vueApp.loadData()
@@ -56,10 +64,24 @@ export default {
     async loadData () {
       const response = await this.$axios.$get('/api/')
       this.productData = response
+    },
+    addToCart (_id) {
+      if (!this.isAuthenticated) {
+        this.$router.push('/login')
+      } else {
+        this.$axios.$post('/api/product/addtocart', { productId: _id }).then((response) => {
+          // console.log(response)
+          this.notfySuccess('add to cart successfully')
+          this.$router.app.refresh()
+          // this.loggedInUserData.cartTotal += 1
+        }).catch((error) => {
+          console.log(error)
+          this.notfyError('add to cart failed')
+        })
+      }
     }
   }
 }
-
 </script>
 
 <style scoped>
