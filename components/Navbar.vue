@@ -41,7 +41,7 @@
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item active">
           <nuxt-link to="/cart" class="nav-link fd-nav-link nav-link-active">
-            <a class="nav-link" href="javascript:void(0)"><span class="icon" style="margin-right:10px"><span class="fa-stack fa-2x has-badge" :data-count="loggedInUserData.cartTotal">
+            <a class="nav-link" href="javascript:void(0)"><span class="icon" style="margin-right:10px"><span class="fa-stack fa-2x has-badge" :data-count="loggedInUserData ? loggedInUserData.cartTotal : 0">
               <i class="fa fa-circle fa-stack-2x" />
               <i class="fa fa-shopping-cart fa-stack-1x fa-inverse" />
             </span></span></a>

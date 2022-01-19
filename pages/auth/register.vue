@@ -7,10 +7,10 @@
             <div class="card-body p-5 text-center">
               <div class="mb-md-5 mt-md-4 pb-5">
                 <h2 class="fw-bold mb-2 text-uppercase">
-                  Login
+                  Register
                 </h2>
                 <p class="text-white-50 mb-5">
-                  Please enter your login and password!
+                  Please enter your details!
                 </p>
 
                 <div v-if="formError" class="alert alert-danger custom-danger-alert">
@@ -18,12 +18,17 @@
                 </div>
 
                 <div class="form-outline form-white mb-4">
-                  <input id="typeEmailX" v-model="loginData.username" type="email" class="form-control form-control-lg">
+                  <input id="typeEmailX" v-model="registerData.email" type="email" class="form-control form-control-lg">
                   <label class="form-label" for="typeEmailX">Email</label>
                 </div>
 
                 <div class="form-outline form-white mb-4">
-                  <input id="typePasswordX" v-model="loginData.password" type="password" class="form-control form-control-lg">
+                  <input id="username" v-model="registerData.username" type="email" class="form-control form-control-lg">
+                  <label class="form-label" for="username">username</label>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input id="typePasswordX" v-model="registerData.password" type="password" class="form-control form-control-lg">
                   <label class="form-label" for="typePasswordX">Password</label>
                 </div>
 
@@ -31,7 +36,7 @@
                   <a class="text-white-50" href="#!">Forgot password?</a>
                 </p>
 
-                <button id="signIn" class="btn btn-outline-light btn-lg px-5" type="submit" @click="submitData()">
+                <button id="signIn" class="btn btn-outline-light btn-lg px-5" type="submit" @click="registerUser()">
                   Login
                 </button>
 
@@ -44,8 +49,8 @@
 
               <div>
                 <p class="mb-0">
-                  Don't have an account? <nuxt-link to="/register" class="nav-link fd-nav-link nav-link-active">
-                    <a href="javascript:void(0)" class="text-white-50 fw-bold">Sign Up</a>
+                  already have an account? <nuxt-link to="/register" class="nav-link fd-nav-link nav-link-active">
+                    <a href="javascript:void(0)" class="text-white-50 fw-bold">Sign in</a>
                   </nuxt-link>
                 </p>
               </div>
@@ -61,46 +66,26 @@
 export default {
   data () {
     return {
-      loginData: {
+      registerData: {
         username: null,
-        password: null
+        password: null,
+        email: null
       },
       formError: null
     }
   },
   methods: {
-    async submitData () {
-      // console.log(this.loginData)
-      try {
-        await this.$auth.loginWith('local', {
-          data: this.loginData
-        }).then((res) => {
-          if (res.data.success) {
-            this.$router.push('/')
-            this.formError = null
-          } else {
-            this.formError = res.data.errorMessage
-          }
-        }).catch((e) => {
-          this.formError = 'Something went wrong'
-          if (e.response) {
-            const data = e.response.data
-            if (data) {
-              this.formError = data.errorMessage
-            }
-          } else {
-            this.formError = 'Login failed'
-          }
+    registerUser () {
+      if (this.registerData && this.registerData.username && this.registerData.email && this.registerData.password) {
+        this.$axios.$post('/api/user/register', { username: this.registerData.username, email: this.registerData.email, password: this.registerData.password }).then((response) => {
+          this.notfySuccess('registered successfully')
+          this.$router.push('/')
+        }).catch((error) => {
+          console.log(error)
+          this.notfyError('registration failed ')
         })
-      } catch (e) {
-        if (e.response) {
-          const data = e.response.data
-          if (data) {
-            this.formError = data.errorMessage
-          }
-        } else {
-          this.formError = 'Login failed'
-        }
+      } else {
+        this.notfyError('please fill all the data correctly')
       }
     }
   }

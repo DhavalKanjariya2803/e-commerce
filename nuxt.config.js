@@ -122,6 +122,7 @@ export default {
       router.push({ path: '/cart', component: resolve(__dirname, '@/pages/cart.vue') })
       router.push({ path: '/allOrders', component: resolve(__dirname, '@/components/AllOrderList.vue') })
       router.push({ path: '/myorders', component: resolve(__dirname, '@/components/MyOrders.vue') })
+      router.push({ path: '/register', component: resolve(__dirname, '@/pages/auth/register.vue') })
     }
   },
   /*
